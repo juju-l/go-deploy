@@ -1,8 +1,10 @@
 
 usr: juju-l
+is: false
 token: ghp_HVB7GZNWnOc9tCcRpB2xGxkrHHUoRg4OGrt-
 rep:
   - juju-l/x-/-master
 # placeholder
+hst: https://git.vipex.cc/
 cycle: 7
 lck: true
