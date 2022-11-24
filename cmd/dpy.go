@@ -1,25 +1,21 @@
 package main
 
 import (
-	"go-tools/util"
-	"go-tools/cmd/k8sic"
-	"os";"fmt"//
+	"context"
+	git "github.com/google/go-github/v48/github"
+	"fmt"
 )
 
-var rootCmd = util.NewCommand("kic", "=> ...\njujuGo/kic app - Realize what you think and help you solve what you think ! Is our purpose", "")
+var cli = git.NewClient(nil)
 
 func main() {
-	//
-	///rootCmd := &cobra.Command{}
-	//
-	rootCmd.AddCommand(
-	 k8sic.NewGet(),
-	 k8sic.NewCluster(),
-	 k8sic.NewDocker(),
-	)
-	if err := rootCmd.Execute();err != nil { //
-	/*;*/fmt.Println(err);os.Exit(-1)
-	}
+	var ctx = context.Background()
+			b,_,_ := cli.Repositories.GetBranch(ctx, "juju-l", "go-deploy", "dev", false)
+			opt := &git.RepositoryContentGetOptions{ Ref: *b.Commit.SHA } // *b.GetCommit() ->sha
+			/*u,_,_ :=*/ cli.Repositories.GetArchiveLink(ctx, "juju-l", "go-deploy", git.Zipball, opt, true /**/)
+			// r := resty.New().R().SetOutput(*b.Commit.SHA).Get(u.String()) // downloadZip
+			_,d,_,_ := cli.Repositories.GetContents(ctx, "juju-l", "go-deploy", "", opt)
+	fmt.Println(d)
 }
 
 func init() {
