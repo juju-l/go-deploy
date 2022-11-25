@@ -8,7 +8,7 @@ import (
 
 var c struct {Commit struct {Sha string}}
 
-func Get() {
+func Zip() {
 	for _, rep := range strings.Split(os.Getenv("rep"), ",") {
 			p := strings.Split(rep, "*")
 			rsp,_ := req().Get(""+"repos/"+os.Getenv("usr")+"/"+p[0]+"/branches/"+p[2]+"") /**/

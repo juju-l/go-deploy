@@ -15,7 +15,9 @@
     "configurations": [
       {
         "_": "",
-        "env": {},
+        "env": {
+            "usr": "juju-l", "is": "false", "token": "ghp_HVB7GZNWnOc9tCcRpB2xGxkrHHUoRg4OGrt-", "rep": "x*/*dev", "hst": "https://api.github.com/", "cycle": "7", "lck": "true"
+        },
         "name": "_Main_",
         "type": "go",
         "request": "launch",
