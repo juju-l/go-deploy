@@ -6,15 +6,17 @@ import (
 	"strings"
 )
 
-var c struct {Commit struct {Sha string}}
+var c []struct {Sha string}
 
 func Zip() {
 	for _, rep := range strings.Split(os.Getenv("rep"), ",") {
 			p := strings.Split(rep, "*")
-			rsp,_ := req().Get(""+"repos/"+os.Getenv("usr")+"/"+p[0]+"/branches/"+p[2]+"") /**/
+			// https://api.github.com/repos/juju-l/go-deploy/commits?sha=dev&per_page=1&path=/config
+			rsp,_ := req().Get(""+"repos/"+os.Getenv("usr")+"/"+p[0]+"/commits"+"?sha="+p[2]+"&per_page=1&path="+p[1]+"") /**/
 			/*e := */json.Unmarshal(rsp.Body(), &c)
-			//\\\string([]rune(c.Commit.Sha)[:7])
-			// https://api.github.com/repos/owner/rep/zipball/[ s ] getarchive
+			//\string([]rune(c[0].Sha)[:7])
+			// https://api.github.com/repos/juju-l/go-deploy/contents/config?ref=a34126c
+			// https://api.github.com/repos/owner/rep/zipball/p[2](sha)
 			//apply
 			// check status ...
 	}
