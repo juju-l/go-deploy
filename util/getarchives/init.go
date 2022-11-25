@@ -13,7 +13,7 @@ func Zip() {
 			p := strings.Split(rep, "*")
 			rsp,_ := req().Get(""+"repos/"+os.Getenv("usr")+"/"+p[0]+"/branches/"+p[2]+"") /**/
 			/*e := */json.Unmarshal(rsp.Body(), &c)
-			/*s := */string([]rune(c.Commit.Sha)[:7])
+			//\\\string([]rune(c.Commit.Sha)[:7])
 			// https://api.github.com/repos/owner/rep/zipball/[ s ] getarchive
 			//apply
 			// check status ...
