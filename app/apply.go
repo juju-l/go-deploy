@@ -11,7 +11,7 @@ import (
 	"k8s.io/client-go/discovery/cached/memory"
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/restmapper"
-	//"fmt"
+	"fmt"
 )
 
 var cli, _ = dynamic.NewForConfig(getConfig())
@@ -22,6 +22,7 @@ func Apply(f map[string]interface{}) {
 		)
 	for _,v := range f {
 			d := yaml.NewYAMLOrJSONDecoder(bytes.NewReader(v.([]byte)), 768) //
+
 					for {
 			var r runtime.RawExtension; if err := d.Decode(&r); err != nil { break }; // exit
 			o := &unstructured.Unstructured{}
@@ -32,10 +33,14 @@ func Apply(f map[string]interface{}) {
 			if m.Scope.Name() == meta.RESTScopeNameNamespace {
 					dri = cli.Resource(m.Resource).Namespace(o.GetNamespace())
 			}
-			/*_, err :=*/ dri.Apply(
-			context.Background(), o.GetName(), o, v1.ApplyOptions{} /*otherRes*/,
+			// opt := v1.ApplyOptions{} //error
+			u, e := dri.Apply(
+			context.Background(), o.GetName(), o, v1.ApplyOptions{FieldManager: "application/apply-patch"} /*otherRes*/,
 			)
+			if e != nil { fmt.Println(e);fmt.Println(o);continue } ///
+			fmt.Println(u)
 					}
+
 			// ----------------------------------- ---
 	}
 	//
